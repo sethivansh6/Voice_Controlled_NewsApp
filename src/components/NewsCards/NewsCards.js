@@ -4,7 +4,7 @@ import { Grid, Grow, Typography } from "@material-ui/core"
 import NewsCard from "../NewsCard/NewsCard"
 import useStyles from "./style"
 
-const infoCards = [
+let infoCards = [
   { color: "#00838f", title: "Latest News", text: "Give me the latest news" },
   {
     color: "#1565c0",
@@ -27,10 +27,11 @@ const infoCards = [
   },
 ]
 
-const NewsCards = ({ articles }) => {
+const NewsCards = ({ articles, activeArticle }) => {
   const classes = useStyles()
+  console.log(articles.length)
 
-  if (!articles.length) {
+  if (articles.length === 0) {
     return (
       <Grow in>
         <Grid
@@ -39,8 +40,8 @@ const NewsCards = ({ articles }) => {
           alignItems="stretch"
           spacing={3}
         >
-          {infoCards.map((infoCard) => {
-            ;<Grid
+          {infoCards.map((infoCard) => (
+            <Grid
               item
               xs={12}
               sm={6}
@@ -62,9 +63,13 @@ const NewsCards = ({ articles }) => {
                     </strong>
                   </Typography>
                 ) : null}
+                <Typography variant="h6">
+                  Try saying: <br />
+                  <i>{infoCard.text}</i>
+                </Typography>
               </div>
             </Grid>
-          })}
+          ))}
         </Grid>
       </Grow>
     )
@@ -80,7 +85,7 @@ const NewsCards = ({ articles }) => {
       >
         {articles.map((article, i) => (
           <Grid item xs={12} sm={6} md={4} lg={3} style={{ display: "flex" }}>
-            <NewsCard i={i} article={article} />
+            <NewsCard i={i} article={article} activeArticle={activeArticle} />
           </Grid>
         ))}
       </Grid>
